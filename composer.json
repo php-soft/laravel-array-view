@@ -1,0 +1,33 @@
+{
+    "name": "php-soft/laravel-array-view",
+    "description": "Laravel Array View",
+    "keywords": ["laravel", "view", "array", "helper"],
+    "support": {
+        "issues": "https://github.com/php-soft/laravel-array-view/issues",
+        "source": "https://github.com/php-soft/laravel-array-view"
+    },
+    "authors": [
+        {
+            "name": "Huy Ta",
+            "email": "huytbt@gmail.com"
+        }
+    ],
+    "license": "MIT",
+    "require": {
+        "php": ">=5.5.9",
+        "huytbt/php-array-view": "1.0.x-dev"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.0"
+    },
+    "autoload": {
+        "files": [
+            "src/helper.php"
+        ]
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "1.0.x-dev"
+        }
+    }
+}
