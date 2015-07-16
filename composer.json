@@ -15,7 +15,7 @@
     "license": "MIT",
     "require": {
         "php": ">=5.5.9",
-        "huytbt/php-array-view": "1.0.x-dev"
+        "huytbt/php-array-view": "1.0.0"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0"
@@ -27,7 +27,7 @@
     },
     "extra": {
         "branch-alias": {
-            "dev-master": "1.0.x-dev"
+            "dev-master": "1.0.0-dev"
         }
     }
 }
