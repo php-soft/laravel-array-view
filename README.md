@@ -2,6 +2,8 @@
 
 An array view engine for Laravel PHP Framework.
 
+> Reference from https://github.com/gergoerdosi/hapi-json-view
+
 ## Installation
 ```sh
 $ composer require php-soft/laravel-array-view
@@ -89,10 +91,20 @@ $this->set('numbers', $this->each($numbers, function ($section, $item) {
 ```
 
 ### extract()
-`Coming soon`
+It extracts values from an object and assigns them to the result object:
+```php
+<?php
 
-### helper()
-`Coming soon`
+$article = [
+    'title' => 'Example Title',
+    'body' => 'Example Body',
+    'created' => '2015-07-16'
+];
+
+$this->extract($article, ['title', 'created']);
+
+// => [ 'title' => 'Example Title', 'created' => '2015-07-16' ]
+```
 
 ### partial()
 views/partials/author.array.php
@@ -111,3 +123,6 @@ $this->set('author', $this->partial('partials/author', [ 'author' => $article->a
 
 // [ 'title' => 'Example Title', 'author' => [ 'name' => 'John Doe', 'gender' => 'female' ] ]
 ```
+
+### helper()
+`Coming soon`
