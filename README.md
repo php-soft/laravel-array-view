@@ -10,7 +10,6 @@ $ composer require php-soft/laravel-array-view
 ```
 
 ## Usage
-```
 Code in controller (Example routes.php)
 ```php
 <?php
