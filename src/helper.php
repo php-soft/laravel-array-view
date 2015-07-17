@@ -15,7 +15,7 @@ if (!function_exists('arrayView')) {
 
         if ($factory == null) {
             $app = app();
-            $viewPaths = $app['config']['view.paths'];
+            $viewPaths = $app['view']->getFinder()->getPaths();
             $factory = new \ChickenCoder\ArrayView\Factory($viewPaths);
         }
 
