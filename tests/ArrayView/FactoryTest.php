@@ -1,6 +1,6 @@
 <?php
 
-class FactoryTest extends \PHPUnit_Framework_TestCase
+class FactoryTest extends \Orchestra\Testbench\TestCase
 {
     public static $objects = array();
 
@@ -14,6 +14,49 @@ class FactoryTest extends \PHPUnit_Framework_TestCase
         $article->title = 'Example Title';
         $article->author = $author;
         self::$objects['article'] = $article;
+    }
+
+    /**
+     * Setup the test environment.
+     */
+    public function setUp()
+    {
+        parent::setUp();
+
+        ArrayView::setViewPaths([ __DIR__ . '/../views' ]);
+    }
+
+    /**
+     * Get package providers.  At a minimum this is the package being tested, but also
+     * would include packages upon which our package depends, e.g. Cartalyst/Sentry
+     * In a normal app environment these would be added to the 'providers' array in
+     * the config/app.php file.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     *
+     * @return array
+     */
+    protected function getPackageProviders($app)
+    {
+        return [
+            'PhpSoft\Illuminate\ArrayView\Providers\ArrayViewServiceProvider',
+        ];
+    }
+    /**
+     * Get package aliases.  In a normal app environment these would be added to
+     * the 'aliases' array in the config/app.php file.  If your package exposes an
+     * aliased facade, you should add the alias here, along with aliases for
+     * facades upon which your package depends, e.g. Cartalyst/Sentry.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     *
+     * @return array
+     */
+    protected function getPackageAliases($app)
+    {
+        return [
+            'ArrayView' => 'PhpSoft\Illuminate\ArrayView\Facades\ArrayView',
+        ];
     }
 
     /**

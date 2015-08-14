@@ -1,16 +1,44 @@
-# Laravel Array View [![Build Status](https://travis-ci.org/php-soft/laravel-array-view.svg)](https://travis-ci.org/php-soft/laravel-array-view)
+# Laravel Array View
+
+[![Build Status](https://travis-ci.org/php-soft/laravel-array-view.svg)](https://travis-ci.org/php-soft/laravel-array-view)
 
 An array view engine for Laravel PHP Framework.
 
-> Reference from https://github.com/gergoerdosi/hapi-json-view
+## Version Compatibility
+
+ ArrayView  | Laravel
+:-----------|:----------
+ 1.0.x      | 5.1.x
+ 1.1.x      | 5.1.x
 
 ## Installation
+
 ```sh
 $ composer require php-soft/laravel-array-view
 ```
 
+Once this has finished, you will need to add the service provider to the `providers` array in your `app.php` config as follows:
+
+```php
+'providers' => [
+    // ...
+    PhpSoft\Illuminate\ArrayView\Providers\ArrayViewServiceProvider::class,
+]
+```
+
+Next, also in the `app.php` config file, under the `aliases` array, you may want to add facades.
+
+```php
+'aliases' => [
+    // ...
+    'ArrayView' => PhpSoft\Illuminate\ArrayView\Facades\ArrayView::class,
+]
+```
+
 ## Usage
+
 Code in controller (Example routes.php)
+
 ```php
 <?php
 
@@ -21,6 +49,7 @@ Route::get('/articles/{id}', function ($id) {
 });
 ```
 views/article.array.php
+
 ```php
 <?php
 
@@ -30,7 +59,9 @@ $this->set('author', function ($section) use ($article) {
     $section->set('name', $article->author->name);
 });
 ```
+
 This template generates the following object:
+
 ```php
 [
     'title' => 'Example Title',
@@ -42,86 +73,4 @@ This template generates the following object:
 
 ## Functions
 
-### set()
-It assigns a value to a key.
-```php
-<?php
-
-$this->set('title', 'Example Title');
-
-// => [ 'title' => 'Example Title' ]
-```
-The value can be a function. If `$this->set()` is called with a key, it creates an array:
-```php
-<?php
-
-$this->set('author', function ($section) {
-
-    $section->set('name', 'John Doe');
-});
-
-// => [ 'author' => [ 'name' => 'John Doe' ] ]
-```
-If `$section->set()` is called without a key, it assign the value to the parent key:
-```php
-<?php
-
-$this->set('title', function ($section) {
-
-    $section->set('Example Title');
-});
-
-// => [ 'title' => 'Example Title' ]
-```
-
-### each()
-It creates a new array by iterating through an existing array:
-```php
-<?php
-
-$numbers = ['one', 'two'];
-
-$this->set('numbers', $this->each($numbers, function ($section, $item) {
-
-    $section->set('number', $item);
-}));
-
-// => [ 'numbers' => [[ 'number' => 'one' ], [ 'number' => 'two' ]] ]
-```
-
-### extract()
-It extracts values from an object and assigns them to the result object:
-```php
-<?php
-
-$article = [
-    'title' => 'Example Title',
-    'body' => 'Example Body',
-    'created' => '2015-07-16'
-];
-
-$this->extract($article, ['title', 'created']);
-
-// => [ 'title' => 'Example Title', 'created' => '2015-07-16' ]
-```
-
-### partial()
-views/partials/author.array.php
-```php
-<?php
-
-$this->set('name', $author->name);
-$this->set('gender', $author->gender);
-```
-views/article.array.php
-```php
-<?php
-
-$this->set('title', $article->title);
-$this->set('author', $this->partial('partials/author', [ 'author' => $article->author ]));
-
-// [ 'title' => 'Example Title', 'author' => [ 'name' => 'John Doe', 'gender' => 'female' ] ]
-```
-
-### helper()
-`Coming soon`
+Reference to https://github.com/huytbt/php-array-view#functions
