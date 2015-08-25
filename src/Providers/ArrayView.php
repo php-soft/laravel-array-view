@@ -3,6 +3,7 @@
 namespace PhpSoft\Illuminate\ArrayView\Providers;
 
 use ChickenCoder\ArrayView\Factory;
+use Illuminate\View\ViewFinderInterface;
 
 class ArrayView
 {
@@ -14,6 +15,13 @@ class ArrayView
     protected $app;
 
     /**
+     * The view finder implementation.
+     *
+     * @var \Illuminate\View\ViewFinderInterface
+     */
+    protected $finder;
+
+    /**
      * The view factory instance.
      *
      * @var \ChickenCoder\ArrayView\Factory
@@ -21,15 +29,87 @@ class ArrayView
     protected $factory;
 
     /**
+     * Array of registered view name aliases.
+     *
+     * @var array
+     */
+    protected $aliases = [];
+
+    /**
      * Create a new database manager instance.
      *
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
-    public function __construct($app, $viewPaths = [])
+    public function __construct($app, ViewFinderInterface $finder, $viewPaths = [])
     {
         $this->app = $app;
+        $this->finder = $finder;
+        $this->finder->addExtension('array.php');
+        $this->finder->addExtension('helper.php');
         $this->factory = new Factory($viewPaths);
+    }
+
+    /**
+     * Get the evaluated view contents for the given view.
+     *
+     * @param  string  $view
+     * @param  array   $data
+     * @param  array   $mergeData
+     * @return \Illuminate\Contracts\View\View
+     */
+    public function make($view, $data = [], $mergeData = [])
+    {
+        if (isset($this->aliases[$view])) {
+            $view = $this->aliases[$view];
+        }
+
+        $view = $this->normalizeName($view);
+
+        $pathView = $this->finder->find($view);
+
+        return $this->factory->render($pathView, $data, $mergeData);
+    }
+
+    /**
+     * Normalize a view name.
+     *
+     * @param  string $name
+     * @return string
+     */
+    protected function normalizeName($name)
+    {
+        $delimiter = ViewFinderInterface::HINT_PATH_DELIMITER;
+
+        if (strpos($name, $delimiter) === false) {
+            return str_replace('/', '.', $name);
+        }
+
+        list($namespace, $name) = explode($delimiter, $name);
+
+        return $namespace.$delimiter.str_replace('/', '.', $name);
+    }
+
+    /**
+     * Helper method
+     * 
+     * @param  string $helper
+     * @return mix
+     */
+    public function helper($helper)
+    {
+        if (isset($this->aliases[$helper])) {
+            $helper = $this->aliases[$helper];
+        }
+
+        $helper = $this->normalizeName($helper);
+
+        $pathHelper = $this->finder->find($helper);
+
+        $args = func_get_args();
+        $args[0] = $pathHelper;
+
+        return call_user_func_array([$this->factory, 'helper'], $args);
     }
 
     /**

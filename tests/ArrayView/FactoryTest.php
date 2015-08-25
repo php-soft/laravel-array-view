@@ -22,8 +22,18 @@ class FactoryTest extends \Orchestra\Testbench\TestCase
     public function setUp()
     {
         parent::setUp();
+    }
 
-        ArrayView::setViewPaths([ __DIR__ . '/../views' ]);
+    /**
+     * Define environment setup.
+     *
+     * @param  \Illuminate\Foundation\Application  $app
+     * @return void
+     */
+    protected function getEnvironmentSetUp($app)
+    {
+        // Setup default database to use sqlite :memory:
+        $app['config']->set('view.paths', [ __DIR__ . '/../views' ]);
     }
 
     /**
@@ -163,5 +173,40 @@ class FactoryTest extends \Orchestra\Testbench\TestCase
         $this->assertEquals(self::$objects['article']->author->name, $results['author']['name']);
         $this->assertArrayHasKey('gender', $results['author']);
         $this->assertEquals(self::$objects['article']->author->gender, $results['author']['gender']);
+    }
+
+    /**
+     * ============================ Test Helper Method ============================
+     */
+
+    /**
+     * @expectedException InvalidArgumentException
+     * @expectedExceptionMessage View [abcdef] not found.
+     */
+    public function testHelperNotFound()
+    {
+        $results = arrayView('testHelper/testNotFound', array(
+            'title' => 'example title'
+        ));
+    }
+
+    public function testHelper()
+    {
+        $results = arrayView('testHelper/test', array(
+            'title' => 'example title'
+        ));
+        $this->assertNotEmpty($results);
+        $this->assertArrayHasKey('title', $results);
+        $this->assertEquals('EXAMPLE TITLE', $results['title']);
+    }
+
+    /**
+     * @expectedException BadFunctionCallException
+     */
+    public function testHelperInvalid()
+    {
+        $results = arrayView('testHelper/testHelperInvalid', array(
+            'title' => 'example title'
+        ));
     }
 }

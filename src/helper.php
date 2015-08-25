@@ -11,6 +11,6 @@ if (!function_exists('arrayView')) {
      */
     function arrayView($view = null, $data = [], $mergeData = [])
     {
-        return PhpSoft\Illuminate\ArrayView\Facades\ArrayView::render($view, $data, $mergeData);
+        return PhpSoft\Illuminate\ArrayView\Facades\ArrayView::make($view, $data, $mergeData);
     }
 }
