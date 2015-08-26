@@ -15,9 +15,8 @@ class ArrayViewServiceProvider extends ServiceProvider
     {
         $this->app->singleton('phpsoft.arrayview', function ($app) {
 
-            $finder = $app['view.finder'];
-            $viewPaths = $app['view']->getFinder()->getPaths();
-            return new ArrayView($app, $finder, $viewPaths);
+            $finder = $app['view']->getFinder();
+            return new ArrayView($finder);
         });
     }
 }

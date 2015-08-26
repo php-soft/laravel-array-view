@@ -1,3 +1,3 @@
 <?php
 
-$this->set('title', ArrayView::helper('helpers.helperInvalid', $title));
+$this->set('title', $this->helper('helpers.helperInvalid', $title));

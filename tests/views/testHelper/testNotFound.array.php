@@ -1,3 +1,3 @@
 <?php
 
-$this->set('title', ArrayView::helper('abcdef', $title));
+$this->set('title', $this->helper('abcdef', $title));

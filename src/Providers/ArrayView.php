@@ -8,13 +8,6 @@ use Illuminate\View\ViewFinderInterface;
 class ArrayView
 {
     /**
-     * The application instance.
-     *
-     * @var \Illuminate\Foundation\Application
-     */
-    protected $app;
-
-    /**
      * The view finder implementation.
      *
      * @var \Illuminate\View\ViewFinderInterface
@@ -41,13 +34,12 @@ class ArrayView
      * @param  \Illuminate\Foundation\Application  $app
      * @return void
      */
-    public function __construct($app, ViewFinderInterface $finder, $viewPaths = [])
+    public function __construct(ViewFinderInterface $finder)
     {
-        $this->app = $app;
         $this->finder = $finder;
         $this->finder->addExtension('array.php');
         $this->finder->addExtension('helper.php');
-        $this->factory = new Factory($viewPaths);
+        $this->factory = new Factory($this->finder->getPaths(), $this->finder);
     }
 
     /**
@@ -60,15 +52,26 @@ class ArrayView
      */
     public function make($view, $data = [], $mergeData = [])
     {
+        return $this->render($view, $data, $mergeData);
+    }
+
+    /**
+     * Get the evaluated view contents for the given view.
+     *
+     * @param  string  $view
+     * @param  array   $data
+     * @param  array   $mergeData
+     * @return \Illuminate\View\View
+     */
+    public function render($view, $data = [], $mergeData = [])
+    {
         if (isset($this->aliases[$view])) {
             $view = $this->aliases[$view];
         }
 
         $view = $this->normalizeName($view);
 
-        $pathView = $this->finder->find($view);
-
-        return $this->factory->render($pathView, $data, $mergeData);
+        return $this->factory->render($view, $data, $mergeData);
     }
 
     /**
@@ -104,10 +107,8 @@ class ArrayView
 
         $helper = $this->normalizeName($helper);
 
-        $pathHelper = $this->finder->find($helper);
-
         $args = func_get_args();
-        $args[0] = $pathHelper;
+        $args[0] = $helper;
 
         return call_user_func_array([$this->factory, 'helper'], $args);
     }
