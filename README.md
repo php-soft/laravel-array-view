@@ -22,7 +22,7 @@ Once this has finished, you will need to add the service provider to the `provid
 ```php
 'providers' => [
     // ...
-    PhpSoft\Illuminate\ArrayView\Providers\ArrayViewServiceProvider::class,
+    PhpSoft\ArrayView\Providers\ArrayViewServiceProvider::class,
 ]
 ```
 
@@ -31,7 +31,7 @@ Next, also in the `app.php` config file, under the `aliases` array, you may want
 ```php
 'aliases' => [
     // ...
-    'ArrayView' => PhpSoft\Illuminate\ArrayView\Facades\ArrayView::class,
+    'ArrayView' => PhpSoft\ArrayView\Facades\ArrayView::class,
 ]
 ```
 

@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpSoft\Illuminate\ArrayView\Facades;
+namespace PhpSoft\ArrayView\Facades;
 
 use Illuminate\Support\Facades\Facade;
 

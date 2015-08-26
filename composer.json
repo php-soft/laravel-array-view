@@ -27,7 +27,7 @@
             "src/helper.php"
         ],
         "psr-4": {
-            "PhpSoft\\Illuminate\\ArrayView\\": "src"
+            "PhpSoft\\ArrayView\\": "src"
         }
     },
     "extra": {

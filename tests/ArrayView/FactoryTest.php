@@ -49,7 +49,7 @@ class FactoryTest extends \Orchestra\Testbench\TestCase
     protected function getPackageProviders($app)
     {
         return [
-            'PhpSoft\Illuminate\ArrayView\Providers\ArrayViewServiceProvider',
+            'PhpSoft\ArrayView\Providers\ArrayViewServiceProvider',
         ];
     }
     /**
@@ -65,7 +65,7 @@ class FactoryTest extends \Orchestra\Testbench\TestCase
     protected function getPackageAliases($app)
     {
         return [
-            'ArrayView' => 'PhpSoft\Illuminate\ArrayView\Facades\ArrayView',
+            'ArrayView' => 'PhpSoft\ArrayView\Facades\ArrayView',
         ];
     }
 

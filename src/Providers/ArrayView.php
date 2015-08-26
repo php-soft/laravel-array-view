@@ -1,6 +1,6 @@
 <?php
 
-namespace PhpSoft\Illuminate\ArrayView\Providers;
+namespace PhpSoft\ArrayView\Providers;
 
 use ChickenCoder\ArrayView\Factory;
 use Illuminate\View\ViewFinderInterface;
