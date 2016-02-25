@@ -16,7 +16,7 @@
     "require": {
         "php": ">=5.5.9",
         "huytbt/php-array-view": "1.0.x",
-        "laravel/framework": "5.1.*"
+        "laravel/framework": "5.*"
     },
     "require-dev": {
         "phpunit/phpunit": "~4.0",
