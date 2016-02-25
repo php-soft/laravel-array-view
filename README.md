@@ -10,6 +10,7 @@ An array view engine for Laravel PHP Framework.
 :-----------|:----------
  1.0.x      | 5.1.x
  1.1.x      | 5.1.x
+ 1.1.4      | 5.*
 
 ## Installation
 
